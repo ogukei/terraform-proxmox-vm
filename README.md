@@ -7,7 +7,7 @@ Minimal Terraform Setup for Proxmox VMs
    For macOS, run the following command:
    ```bash
    brew install terraform
-   # Example output: Terraform v1.5.7 on darwin_arm64
+   # Terraform v1.5.7 on darwin_arm64
    ```
 
 2. Create a Terraform User on Proxmox  
