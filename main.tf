@@ -26,8 +26,8 @@ provider "proxmox" {
   pm_tls_insecure = true
 }
 
-resource "proxmox_vm_qemu" "cloudinit-test" {
-  name = "omega"
+resource "proxmox_vm_qemu" "default" {
+  name = "proxima"
   target_node = "alpha-centauri"
   clone = "template-ubuntu-server-24.04"
 
@@ -61,10 +61,16 @@ resource "proxmox_vm_qemu" "cloudinit-test" {
     }
   }
 
+  network {
+    id = 0
+    model = "virtio"
+    bridge = "vmbr3"
+  }
+
   ipconfig0 = "ip=10.10.2.5/24,gw=10.10.2.1"
   nameserver = "1.1.1.1 8.8.8.8"
 
-  sshkeys = <<EOF
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILi7Af+hhLYDETM8vSVzTsc966Sb1HcROisCTx0Jsz6Y ogukei@ogukei-pc.local
-  EOF
+  ciuser = var.ci_username
+  cipassword = var.ci_password
+  sshkeys = var.ci_sshkeys
 }
