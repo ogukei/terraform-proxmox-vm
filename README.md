@@ -17,6 +17,7 @@ Minimal Terraform Setup for Proxmox VMs
    pveum user add terraform-prov@pve --password <password>
    pveum aclmod / -user terraform-prov@pve -role TerraformProv
    ```
+   https://registry.terraform.io/providers/Terraform-for-Proxmox/proxmox/latest/docs
 
 3. Issue Proxmox API Tokens  
    In the Proxmox Web interface, navigate to Datacenter > Permissions > API Tokens and generate the required tokens.
