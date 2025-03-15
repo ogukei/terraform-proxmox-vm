@@ -49,7 +49,7 @@ Minimal Terraform Setup for Proxmox VMs
    ```
 
 6. Customize the Terraform Configuration  
-   Edit `main.tf` to suit your environment. In particular, update the network bridge configuration (e.g., `vmbr3`) to match your setup.
+   Edit `main.tf` to suit your environment. In particular, update the network bridge configuration (e.g., `vmbr3`) and ensure that the `target_node` setting is also modified to match your Proxmox environment.
 
 7. Run Terraform  
    Navigate to your repository directory and execute the following commands:
