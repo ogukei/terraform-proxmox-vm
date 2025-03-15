@@ -22,7 +22,21 @@ Minimal Terraform Setup for Proxmox VMs
 3. Issue Proxmox API Tokens  
    In the Proxmox Web interface, navigate to Datacenter > Permissions > API Tokens and generate the required tokens.
 
-4. Configure Terraform Variables  
+4. Create VM Template  
+   Follow the steps below (for more details, see https://pve.proxmox.com/wiki/Cloud-Init_Support):
+   ```bash
+   wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+   qm create 9000 --memory 2048 --net0 virtio,bridge=vmbr0
+   qm importdisk 9000 noble-server-cloudimg-amd64.img local-lvm
+   qm set 9000 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-9000-disk-0
+   qm set 9000 --ide2 local-lvm:cloudinit
+   qm set 9000 --boot order=scsi0
+   qm set 9000 --serial0 socket --vga serial0
+   qm set 9000 --name template-ubuntu-server-24.04
+   qm template 9000
+   ```
+
+5. Configure Terraform Variables  
    Create a `terraform.tfvars` file in the repository root directory with the following content:
    ```hcl
    pm_api_url = "http://example.com/api2/json"
@@ -34,7 +48,7 @@ Minimal Terraform Setup for Proxmox VMs
    ci_sshkeys = "ssh-ed25519 AAAAC3Nz ..."
    ```
 
-5. Customize the Terraform Configuration  
+6. Customize the Terraform Configuration  
    Edit `main.tf` to suit your environment. In particular, update the network bridge configuration (e.g., `vmbr3`) to match your setup.
 
 ## Environment Details
